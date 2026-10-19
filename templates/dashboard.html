@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spending Dashboard</title>
+<link rel="manifest" href="/static/manifest.json">
+<meta name="theme-color" content="#1f3a5f">
+<link rel="icon" href="/static/icon-192.png">
+<link rel="apple-touch-icon" href="/static/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  *{box-sizing:border-box}
+  body{font-family:system-ui,sans-serif;margin:0;background:#f5f6f8;color:#1c1e21}
+  header{background:#1f3a5f;color:#fff;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+  header a{background:#fff;color:#1f3a5f;text-decoration:none;padding:8px 14px;border-radius:8px;font-weight:600}
+  main{max-width:1100px;margin:0 auto;padding:18px}
+  form.filters{background:#fff;border-radius:10px;padding:12px;display:flex;gap:10px;flex-wrap:wrap;align-items:end;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+  form.filters label{font-size:.8rem;color:#6b7280;display:block}
+  select,input[type=date]{padding:8px;border:1px solid #cfd5df;border-radius:8px;font-size:.95rem}
+  .go{padding:9px 16px;border:0;border-radius:8px;background:#1f3a5f;color:#fff;cursor:pointer}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:16px}
+  .card,.panel{background:#fff;border-radius:10px;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+  .card .l{color:#6b7280;font-size:.85rem}
+  .card .v{font-size:1.5rem;font-weight:700;margin-top:4px}
+  .card .s{font-size:.8rem;color:#6b7280}
+  .up{color:#b91c1c}.down{color:#15803d}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:14px;margin-bottom:14px}
+  h3{margin:0 0 10px;font-size:1rem}
+  table{width:100%;border-collapse:collapse;font-size:.9rem}
+  th,td{text-align:left;padding:6px 8px;border-bottom:1px solid #eee}
+  td.n,th.n{text-align:right}
+  .scroll{max-height:320px;overflow:auto}
+  .badge{font-size:.7rem;padding:1px 6px;border-radius:6px;background:#e3e7ee;margin-left:4px}
+  .flag{color:#b45309;font-weight:600}
+  ul.ins{margin:0;padding-left:18px;line-height:1.6}
+  .bar{height:8px;background:#e3e7ee;border-radius:4px;overflow:hidden}
+  .bar i{display:block;height:100%;background:#1f3a5f}
+  @media(max-width:480px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <strong>Spending Dashboard</strong>
+  <span style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+    <a href="/">➕ Add / Upload</a>
+    <a href="/recommendations">💡 Tips</a>
+    <a href="/profile">👤 {{ username }}</a>
+    <form method="post" action="/logout" style="margin:0"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button type="submit" style="background:#fff;color:#1f3a5f;border:0;padding:8px 14px;border-radius:8px;font-weight:600;cursor:pointer;font-size:1rem">Logout</button></form>
+  </span>
+</header>
+<main>
+  {% if not profile_done %}<div class="panel" style="margin-bottom:12px;background:#fff8e1">💡 Tell us about your goals in your <a href="/profile">profile</a> to get tips that fit you.</div>{% endif %}
+  <form class="filters" method="get" id="f">
+    <div><label>Period</label>
+      <select name="range" id="range" onchange="this.form.submit()">
+        {% for k, name in ranges %}<option value="{{ k }}" {{ 'selected' if k == s.range }}>{{ name }}</option>{% endfor %}
+      </select></div>
+    <div id="custom" style="display:{{ 'flex' if s.range == 'custom' else 'none' }};gap:8px">
+      <div><label>From</label><input type="date" name="start" value="{{ s.start }}"></div>
+      <div><label>To</label><input type="date" name="end" value="{{ s.end }}"></div>
+      <button class="go" type="submit">Apply</button>
+    </div>
+    <div><label>Group by</label>
+      <select name="group" onchange="this.form.submit()">
+        {% for k, name in groups %}<option value="{{ k }}" {{ 'selected' if k == group_choice }}>{{ name }}</option>{% endfor %}
+      </select></div>
+    <div style="margin-left:auto;color:#6b7280">{{ s.period_label }}</div>
+  </form>
+
+{% if not s.has_data %}
+  <div class="panel">No expenses in this period yet. <a href="/">Add or upload one</a>, or pick another period.</div>
+{% else %}
+  <div class="cards">
+    <div class="card"><div class="l">Total spent</div><div class="v">₹{{ '{:,.2f}'.format(s.total) }}</div>
+      {% if s.change_pct is not none %}<div class="s {{ 'up' if s.change_pct > 0 else 'down' }}">{{ '▲' if s.change_pct > 0 else '▼' }} {{ s.change_pct|abs }}% vs previous period</div>{% endif %}</div>
+    <div class="card"><div class="l">Entries</div><div class="v">{{ s.entries }}</div></div>
+    <div class="card"><div class="l">Average per day</div><div class="v">₹{{ '{:,.2f}'.format(s.per_day) }}</div></div>
+    <div class="card"><div class="l">Biggest expense</div><div class="v">₹{{ '{:,.2f}'.format(s.biggest.amount) }}</div><div class="s">{{ s.biggest.shop }} · {{ s.biggest.date }}</div></div>
+    {% if budget %}<div class="card"><div class="l">Monthly budget</div><div class="v {{ 'up' if budget.pct > 100 }}">{{ budget.pct }}%</div>
+      <div class="bar"><i style="width:{{ [budget.pct, 100]|min }}%"></i></div>
+      <div class="s">₹{{ '{:,.0f}'.format(budget.spent) }} of ₹{{ '{:,.0f}'.format(budget.amount) }} · {% if budget.left >= 0 %}₹{{ '{:,.0f}'.format(budget.left) }} left{% else %}₹{{ '{:,.0f}'.format(-budget.left) }} over{% endif %}</div></div>{% endif %}
+    <div class="card"><div class="l">To check</div><div class="v {{ 'flag' if s.review_count }}">{{ s.review_count }}</div><div class="s">low-confidence categories</div></div>
+  </div>
+
+  <div class="panel" style="margin-bottom:14px"><h3>Quick insights</h3>
+    <ul class="ins">{% for t in s.insights %}<li>{{ t }}</li>{% endfor %}</ul></div>
+
+  <div class="grid">
+    <div class="panel"><h3>Spending by {{ s.group }}</h3><canvas id="trend"></canvas></div>
+    <div class="panel"><h3>Spending by category</h3><canvas id="cat"></canvas></div>
+  </div>
+
+  <div class="grid">
+    <div class="panel"><h3>Categories — amount &amp; how often</h3>
+      <table><tr><th>Category</th><th class="n">Times</th><th class="n">Amount</th><th class="n">Avg</th><th class="n">Share</th></tr>
+      {% for c in s.categories %}<tr><td>{{ c.name }}<div class="bar"><i style="width:{{ c.share }}%"></i></div></td>
+        <td class="n">{{ c.times }}</td><td class="n">₹{{ '{:,.0f}'.format(c.amount) }}</td><td class="n">₹{{ '{:,.0f}'.format(c.average) }}</td><td class="n">{{ c.share }}%</td></tr>{% endfor %}</table></div>
+    <div class="panel"><h3>{{ s.group|capitalize }}-wise table</h3>
+      <div class="scroll"><table><tr><th>Period</th><th class="n">Entries</th><th class="n">Amount</th></tr>
+      {% for t in s.trend|reverse %}<tr><td>{{ t.label }}</td><td class="n">{{ t.count }}</td><td class="n">₹{{ '{:,.2f}'.format(t.amount) }}</td></tr>{% endfor %}</table></div></div>
+  </div>
+
+  <div class="grid">
+    <div class="panel"><h3>Spending by weekday</h3><canvas id="wd"></canvas></div>
+    <div class="panel"><h3>Top shops</h3>
+      <table><tr><th>Shop</th><th class="n">Times</th><th class="n">Amount</th></tr>
+      {% for r in s.top_shops %}<tr><td>{{ r.name }}</td><td class="n">{{ r.times }}</td><td class="n">₹{{ '{:,.0f}'.format(r.amount) }}</td></tr>{% endfor %}</table>
+      {% if s.top_items %}<h3 style="margin-top:16px">Most bought items</h3>
+      <table><tr><th>Item</th><th>Category</th><th class="n">Times</th></tr>
+      {% for r in s.top_items %}<tr><td>{{ r.name }}</td><td>{{ r.category }}</td><td class="n">{{ r.times }}</td></tr>{% endfor %}</table>{% endif %}</div>
+  </div>
+
+  <div class="panel"><h3>Recent entries</h3>
+    <table><tr><th>Date</th><th>Shop</th><th>Category</th><th class="n">Amount</th></tr>
+    {% for r in s.recent %}<tr><td>{{ r.date }}</td><td>{{ r.shop }}{% if r.manual %}<span class="badge">manual</span>{% endif %}</td>
+      <td>{{ r.category }}{% if r.review %} <span class="flag">· check</span>{% endif %}</td><td class="n">₹{{ '{:,.2f}'.format(r.amount) }}</td></tr>{% endfor %}</table></div>
+
+  <script>
+    const trend = {{ s.trend|tojson }};
+    new Chart(document.getElementById('trend'),{type:'bar',
+      data:{labels:trend.map(t=>t.label),datasets:[{label:'₹',data:trend.map(t=>t.amount),backgroundColor:'#1f3a5f'}]},
+      options:{plugins:{legend:{display:false}},scales:{x:{ticks:{maxRotation:60,autoSkip:true}}}}});
+    const cats = {{ s.categories|tojson }};
+    new Chart(document.getElementById('cat'),{type:'doughnut',
+      data:{labels:cats.map(c=>c.name),datasets:[{data:cats.map(c=>c.amount)}]},options:{plugins:{legend:{position:'right'}}}});
+    new Chart(document.getElementById('wd'),{type:'bar',
+      data:{labels:{{ s.weekday_labels|tojson }},datasets:[{label:'₹',data:{{ s.weekday_values|tojson }},backgroundColor:'#1f7a4d'}]},
+      options:{plugins:{legend:{display:false}}}});
+  </script>
+{% endif %}
+</main>
+<footer style="text-align:center;padding:18px;font-size:.85rem;color:#6b7280"><a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></footer>
+<script>if ('serviceWorker' in navigator) { window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js')); }</script>
+<script>
+  // show the From/To boxes only for "Custom dates"
+  document.getElementById('range').addEventListener('change', function(){
+    document.getElementById('custom').style.display = this.value === 'custom' ? 'flex' : 'none';
+  });
+</script>
+</body>
+</html>

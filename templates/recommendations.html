@@ -1,0 +1,272 @@
+{% extends "base.html" %}
+{% block title %}Money Buddy{% endblock %}
+{% block head %}
+<style>
+  body{background:linear-gradient(180deg,#eef3ff 0%,#f7f4ff 45%,#fff8f1 100%);min-height:100vh}
+  main{max-width:880px}
+  .wrap > *{animation:rise .5s ease both}
+  @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  h2.sec{font-size:1.15rem;margin:26px 4px 10px;display:flex;align-items:center;gap:8px}
+  .card{background:#fff;border-radius:20px;padding:18px;box-shadow:0 4px 18px rgba(31,58,95,.08)}
+  .grid{display:grid;gap:14px}
+  .g3{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+  .g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+
+  /* hero */
+  .hero{border-radius:24px;padding:24px;color:#fff;display:flex;gap:18px;align-items:center;box-shadow:0 8px 24px rgba(31,58,95,.18)}
+  .hero.mood-great{background:linear-gradient(135deg,#11998e,#38ef7d)}
+  .hero.mood-good{background:linear-gradient(135deg,#4776e6,#8e54e9)}
+  .hero.mood-watch{background:linear-gradient(135deg,#f7971e,#ffb347)}
+  .hero.mood-alert{background:linear-gradient(135deg,#e53935,#ff7043)}
+  .hero.plain{background:linear-gradient(135deg,#1f3a5f,#4776e6)}
+  .hero .big{font-size:3.4rem;line-height:1}
+  .hero .hello{opacity:.9;font-size:.95rem}
+  .hero h1{margin:4px 0 6px;font-size:1.55rem;line-height:1.25}
+  .hero .meta{opacity:.8;font-size:.8rem}
+
+  /* today */
+  .today{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+  .tile{text-align:center}
+  .tile .label{color:#6b7280;font-size:.85rem;margin-top:6px}
+  .ring{--p:0;width:120px;height:120px;border-radius:50%;margin:0 auto;display:grid;place-items:center;
+        background:conic-gradient(var(--c,#4776e6) calc(var(--p)*1%),#e8ecf4 0)}
+  .ring span{width:92px;height:92px;border-radius:50%;background:#fff;display:grid;place-items:center;font-weight:800;font-size:1.5rem}
+  .ring.over{--c:#e53935}.ring.warn{--c:#f59e0b}.ring.ok{--c:#16a34a}
+  .money{font-size:1.9rem;font-weight:800}
+  .bar{height:10px;background:#e8ecf4;border-radius:6px;overflow:hidden;margin:8px 0}
+  .bar i{display:block;height:100%;background:#16a34a;border-radius:6px;transition:width 1s}
+  .bar i.over{background:#e53935}
+  .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:.78rem;font-weight:700}
+  .p-easy{background:#dcfce7;color:#166534}.p-medium{background:#fef3c7;color:#92400e}.p-stretch{background:#fee2e2;color:#991b1b}
+  .p-save{background:#e0e7ff;color:#3730a3}
+
+  /* snapshot + actions */
+  .snap .e{font-size:2rem}
+  .snap h3,.act h3{margin:6px 0 4px;font-size:1.02rem}
+  .snap p,.act p{margin:0;color:#4b5563;line-height:1.5}
+  .act{position:relative;padding-left:64px}
+  .act .num{position:absolute;left:16px;top:16px;width:36px;height:36px;border-radius:50%;background:#1f3a5f;color:#fff;
+            display:grid;place-items:center;font-weight:800}
+  .act .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .act .emoji{font-size:1.4rem;margin-right:4px}
+
+  /* enjoy / watch / challenge */
+  .enjoy{background:linear-gradient(135deg,#e7f9ee,#f4fff8);border:1px solid #bbf7d0}
+  .watch{background:linear-gradient(135deg,#fff6e0,#fffaf0);border:1px solid #fde68a}
+  .box .e{font-size:1.8rem}.box h3{margin:4px 0}.box p{margin:0;line-height:1.5}
+  .challenge{background:linear-gradient(135deg,#6d28d9,#a855f7);color:#fff;box-shadow:0 8px 22px rgba(109,40,217,.28)}
+  .challenge h3{margin:4px 0 6px;font-size:1.2rem}.challenge p{margin:0 0 10px;line-height:1.5;opacity:.95}
+  .challenge .goal{background:rgba(255,255,255,.2);padding:6px 12px;border-radius:999px;display:inline-block;font-weight:700;font-size:.9rem}
+
+  /* habits */
+  .habit{display:flex;gap:12px;align-items:center;padding:12px 4px;border-bottom:1px solid #eef0f5;cursor:pointer;user-select:none}
+  .habit:last-of-type{border:0}
+  .habit input{width:24px;height:24px;accent-color:#16a34a;flex:none}
+  .habit.done span{text-decoration:line-through;color:#9ca3af}
+  #habitMsg{margin-top:8px;font-weight:700;color:#166534}
+  .cheer{text-align:center;font-size:1.1rem;margin:26px 8px 8px;color:#374151}
+
+  /* generate panel */
+  .gen button.go{margin-top:12px}
+  .spinner{display:none;width:18px;height:18px;border:3px solid rgba(255,255,255,.5);border-top-color:#fff;border-radius:50%;
+           animation:spin .8s linear infinite;margin-right:8px;vertical-align:-3px}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .empty{text-align:center;padding:30px 10px}
+  .empty .big{font-size:3rem}
+  @media(max-width:520px){.hero{flex-direction:column;text-align:center}.hero .big{font-size:2.8rem}}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="wrap">
+
+  {% if error %}<div class="msg err">⚠️ {{ error }}</div>{% endif %}
+  {% if note %}<div class="msg ok">ℹ️ {{ note }}</div>{% endif %}
+
+  <!-- ============ HERO ============ -->
+  {% if card %}
+  <section class="hero mood-{{ card.mood }}">
+    <div class="big">{{ mood_emoji }}</div>
+    <div>
+      <div class="hello">{% if first_name %}Hi {{ first_name }}! {% endif %}Your Money Buddy says…</div>
+      <h1>{{ card.headline }}</h1>
+      <div class="meta">Made {{ tip.created_at }}</div>
+    </div>
+  </section>
+  {% else %}
+  <section class="hero plain">
+    <div class="big">💡</div>
+    <div>
+      <div class="hello">{% if first_name %}Hi {{ first_name }}! {% endif %}Meet your Money Buddy</div>
+      <h1>Friendly tips made just for your spending</h1>
+      <div class="meta">No jargon. Small steps you can start today.</div>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- ============ TODAY (always shown, no AI needed) ============ -->
+  <h2 class="sec">📅 Your money today <span class="pill p-save">{{ guide.weekday }}</span></h2>
+  {% if guide.budget %}
+  <div class="today">
+    <div class="card tile">
+      <div class="ring {{ 'over' if guide.used_pct > 100 else ('warn' if guide.used_pct > 80 else 'ok') }}"
+           style="--p:{{ [guide.used_pct, 100]|min }}"><span>{{ guide.used_pct }}%</span></div>
+      <div class="label">of this month's budget used<br>₹{{ '{:,.0f}'.format(guide.spent_this_month) }} of ₹{{ '{:,.0f}'.format(guide.budget) }}</div>
+    </div>
+    <div class="card tile">
+      {% if guide.over_budget %}
+        <div class="money" style="color:#e53935">₹0</div>
+        <div class="label">You are over budget by ₹{{ '{:,.0f}'.format(-guide.budget_left) }}.<br>Today, spend only on must-haves. 💪</div>
+      {% else %}
+        <div class="money">₹{{ '{:,.0f}'.format(guide.safe_to_spend_today) }}</div>
+        <div class="label">safe to spend today</div>
+        {% set pct = (guide.today_spent / guide.safe_to_spend_today * 100) if guide.safe_to_spend_today else 100 %}
+        <div class="bar"><i class="{{ 'over' if pct > 100 }}" style="width:{{ [pct, 100]|min }}%"></i></div>
+        <div class="label">{% if pct <= 100 %}✅ Spent ₹{{ '{:,.0f}'.format(guide.today_spent) }} so far today{% else %}⚠️ Spent ₹{{ '{:,.0f}'.format(guide.today_spent) }} today — a bit over{% endif %}</div>
+      {% endif %}
+    </div>
+    <div class="card tile">
+      {% if guide.pace_diff <= 0 %}
+        <div class="money" style="color:#16a34a">₹{{ '{:,.0f}'.format(-guide.pace_diff) }}</div>
+        <div class="label">ahead of your pace 🎉<br>{{ guide.days_left }} day{{ 's' if guide.days_left != 1 }} left this month</div>
+      {% else %}
+        <div class="money" style="color:#f59e0b">₹{{ '{:,.0f}'.format(guide.pace_diff) }}</div>
+        <div class="label">behind your pace — easy to fix 👍<br>{{ guide.days_left }} day{{ 's' if guide.days_left != 1 }} left this month</div>
+      {% endif %}
+    </div>
+  </div>
+  {% else %}
+  <div class="card" style="text-align:center">
+    <div style="font-size:2.2rem">🎯</div>
+    <strong>Set a monthly budget to unlock your daily "safe to spend" amount.</strong>
+    <p class="hint" style="margin:6px 0 12px">It takes 10 seconds and makes your tips far more useful.</p>
+    <a class="nav" style="background:#1f3a5f;color:#fff" href="/profile">Set my budget</a>
+  </div>
+  {% endif %}
+
+  <!-- ============ GENERATE ============ -->
+  <h2 class="sec">✨ Your personal tips</h2>
+  {% if not has_key %}
+  <div class="card">
+    <strong>One-time setup needed.</strong> Create a file named <code>.env</code> next to <code>app.py</code> with these lines, then restart the app:
+    {% if provider == 'gemini' %}
+    <pre style="background:#f1f3f6;padding:12px;border-radius:10px;overflow:auto">LLM_PROVIDER=gemini
+GEMINI_API_KEY=paste-your-key-here</pre>
+    <p class="hint">Free key: Google AI Studio (aistudio.google.com) → "Get API key".</p>
+    {% else %}
+    <pre style="background:#f1f3f6;padding:12px;border-radius:10px;overflow:auto">LLM_PROVIDER=claude
+ANTHROPIC_API_KEY=paste-your-key-here</pre>
+    <p class="hint">Key from the Anthropic Console (console.anthropic.com).</p>
+    {% endif %}
+  </div>
+  {% else %}
+  <div class="card gen">
+    <form method="post" action="/recommendations" id="genForm">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      <p style="margin:0 0 8px">{{ 'Want fresher advice after your latest spending?' if card else 'Ready? Your Money Buddy will read your last 30 days and your profile.' }}</p>
+      <label style="font-weight:400;display:flex;gap:8px;align-items:flex-start;margin:0">
+        <input type="checkbox" name="agree" value="1" style="width:auto;margin-top:4px">
+        <span>OK to share my spending summary with {{ provider_name }}. <details style="display:inline"><summary style="display:inline;cursor:pointer;color:#1f3a5f">What is shared?</summary>
+          <span class="hint">Category totals, number of entries, spending by weekday, a few item names, today's budget numbers and your profile answers. <strong>Not shared:</strong> your username or name, shop names, bill photos or bill text.{% if provider == 'gemini' %} On Google's free tier, Google may use shared data to improve its products.{% endif %}</span></details></span>
+      </label>
+      <button class="go" type="submit" id="genBtn"><span class="spinner" id="spin"></span><span id="genText">{{ '🔄 Refresh my tips' if card else '✨ Get my tips' }}</span></button>
+    </form>
+    <p class="hint" style="margin-bottom:0">Needs at least {{ min_entries }} expenses in the last 30 days. A filled <a href="/profile">profile</a> = better tips.</p>
+  </div>
+  {% endif %}
+
+  <!-- ============ THE TIPS ============ -->
+  {% if card %}
+
+    {% if card.snapshot %}
+    <h2 class="sec">👀 Quick look</h2>
+    <div class="grid g3">
+      {% for s in card.snapshot %}
+      <div class="card snap"><div class="e">{{ s.emoji }}</div><h3>{{ s.title }}</h3><p>{{ s.text }}</p></div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <h2 class="sec">🚀 Your 3 next best moves</h2>
+    <div class="grid">
+      {% for a in card.actions %}
+      <div class="card act">
+        <div class="num">{{ loop.index }}</div>
+        <h3><span class="emoji">{{ a.emoji }}</span>{{ a.title }}</h3>
+        <p>{{ a.how }}</p>
+        <div class="row">
+          <span class="pill p-{{ a.effort }}">{{ {'easy':'🟢 Easy win','medium':'🟡 Worth a try','stretch':'🔴 Stretch goal'}[a.effort] }}</span>
+          {% if a.save %}<span class="pill p-save">💰 {{ a.save }}</span>{% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="grid g2" style="margin-top:14px">
+      {% if card.enjoy.text %}<div class="card box enjoy"><div class="e">{{ card.enjoy.emoji or '🎈' }}</div><h3>Enjoy guilt-free</h3><p>{{ card.enjoy.text }}</p></div>{% endif %}
+      {% if card.watch.text %}<div class="card box watch"><div class="e">{{ card.watch.emoji or '🔎' }}</div><h3>Keep an eye on</h3><p>{{ card.watch.text }}</p></div>{% endif %}
+    </div>
+
+    {% if card.challenge.title %}
+    <h2 class="sec">🏆 This week's challenge</h2>
+    <div class="card challenge">
+      <h3>{{ card.challenge.title }}</h3>
+      <p>{{ card.challenge.text }}</p>
+      {% if card.challenge.goal %}<span class="goal">🎯 {{ card.challenge.goal }}</span>{% endif %}
+    </div>
+    {% endif %}
+
+    {% if card.habits %}
+    <h2 class="sec">✅ Today's tiny habits</h2>
+    <div class="card" id="habits" data-key="habits:{{ today_iso }}:{{ tip.created_at }}">
+      {% for h in card.habits %}
+      <label class="habit"><input type="checkbox" data-i="{{ loop.index0 }}"><span>{{ h }}</span></label>
+      {% endfor %}
+      <div id="habitMsg"></div>
+    </div>
+    {% endif %}
+
+    {% if card.cheer %}<div class="cheer">💛 {{ card.cheer }}</div>{% endif %}
+    <p class="hint" style="text-align:center;font-size:.8rem">Friendly guidance from an AI, not professional financial advice.</p>
+
+  {% elif tip %}
+    <div class="card" style="margin-top:14px;white-space:pre-wrap;line-height:1.6">{{ tip.text }}</div>
+    <p class="hint">These are older tips. Press the button above for the new friendly format.</p>
+  {% else %}
+    <div class="card empty" style="margin-top:14px">
+      <div class="big">🌱</div>
+      <strong>No tips yet</strong>
+      <p class="hint">Add a few expenses, tick the box above and press <em>Get my tips</em>.</p>
+    </div>
+  {% endif %}
+
+</div>
+
+<script>
+  // loading state while the AI is thinking
+  const form = document.getElementById('genForm');
+  if (form) form.addEventListener('submit', () => {
+    document.getElementById('spin').style.display = 'inline-block';
+    document.getElementById('genText').textContent = 'Your Money Buddy is thinking… ⏳';
+    setTimeout(() => { document.getElementById('genBtn').disabled = true; }, 0);
+  });
+
+  // tick-off habits, remembered on this device for today
+  const box = document.getElementById('habits');
+  if (box) {
+    const key = box.dataset.key;
+    let saved = [];
+    try { saved = JSON.parse(localStorage.getItem(key) || '[]'); } catch (e) {}
+    const boxes = box.querySelectorAll('input[type=checkbox]');
+    const msg = document.getElementById('habitMsg');
+    function refresh() {
+      let done = 0;
+      boxes.forEach(b => { b.closest('.habit').classList.toggle('done', b.checked); if (b.checked) done++; });
+      msg.textContent = done === boxes.length ? '🎉 All done for today — brilliant!' : done + ' of ' + boxes.length + ' done';
+      try { localStorage.setItem(key, JSON.stringify([...boxes].map(b => b.checked))); } catch (e) {}
+    }
+    boxes.forEach((b, i) => { b.checked = !!saved[i]; b.addEventListener('change', refresh); });
+    refresh();
+  }
+</script>
+{% endblock %}

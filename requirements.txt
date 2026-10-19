@@ -1,0 +1,8 @@
+flask
+easyocr
+certifi
+joblib
+scikit-learn
+pandas
+tzdata
+pymongo[srv]

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Expense Tracker{% endblock %}</title>
+<style>
+  *{box-sizing:border-box}
+  body{font-family:system-ui,sans-serif;margin:0;background:#f5f6f8;color:#1c1e21}
+  header{background:#1f3a5f;color:#fff;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+  header h1{font-size:1.2rem;margin:0}
+  .nav{background:#fff;color:#1f3a5f;text-decoration:none;padding:8px 14px;border-radius:8px;font-weight:600;border:0;font-size:1rem;cursor:pointer}
+  main{max-width:600px;margin:0 auto;padding:20px}
+  .panel{background:#fff;border-radius:12px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+  label{display:block;font-weight:600;margin:14px 0 4px}
+  .opt{font-weight:400;color:#6b7280;font-size:.85rem}
+  input,select,textarea{width:100%;padding:11px;border:1px solid #cfd5df;border-radius:8px;font-size:1rem;background:#fff;font-family:inherit}
+  textarea{min-height:90px;resize:vertical}
+  button.go{width:100%;margin-top:20px;padding:13px;border:0;border-radius:10px;background:#1f7a4d;color:#fff;font-size:1.05rem;font-weight:600;cursor:pointer}
+  .msg{padding:10px 14px;border-radius:8px;margin-bottom:14px}
+  .ok{background:#e1f5e9;color:#14532d}
+  .err{background:#fde8e8;color:#7f1d1d}
+  small,.hint{color:#6b7280}
+  a{color:#1f3a5f}
+</style>
+<link rel="manifest" href="/static/manifest.json">
+<meta name="theme-color" content="#1f3a5f">
+<link rel="icon" href="/static/icon-192.png">
+<link rel="apple-touch-icon" href="/static/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+{% block head %}{% endblock %}
+</head>
+<body>
+<header>
+  <h1>Expense Tracker</h1>
+  {% if session.get('user_id') %}
+  <span style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+    <a class="nav" href="/">➕ Add</a>
+    <a class="nav" href="/dashboard">📊 Dashboard</a>
+    <a class="nav" href="/recommendations">💡 Tips</a>
+    <a class="nav" href="/profile">👤 {{ session.get('username') }}</a>
+    <form method="post" action="/logout" style="margin:0"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="nav" type="submit">Logout</button></form>
+  </span>
+  {% endif %}
+</header>
+<main>{% block content %}{% endblock %}</main>
+<footer style="text-align:center;padding:18px;font-size:.85rem;color:#6b7280"><a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></footer>
+<script>if ('serviceWorker' in navigator) { window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js')); }</script>
+</body>
+</html>

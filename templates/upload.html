@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Expense Tracker</title>
+<link rel="manifest" href="/static/manifest.json">
+<meta name="theme-color" content="#1f3a5f">
+<link rel="icon" href="/static/icon-192.png">
+<link rel="apple-touch-icon" href="/static/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<style>
+  *{box-sizing:border-box}
+  body{font-family:system-ui,sans-serif;margin:0;background:#f5f6f8;color:#1c1e21}
+  header{background:#1f3a5f;color:#fff;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+  header h1{font-size:1.2rem;margin:0}
+  .nav{background:#fff;color:#1f3a5f;text-decoration:none;padding:8px 14px;border-radius:8px;font-weight:600}
+  main{max-width:560px;margin:0 auto;padding:20px}
+  .tabs{display:flex;gap:8px;margin-bottom:14px}
+  .tab{flex:1;padding:10px;border:0;border-radius:8px;background:#e3e7ee;font-size:1rem;cursor:pointer}
+  .tab.active{background:#1f3a5f;color:#fff}
+  .panel{background:#fff;border-radius:12px;padding:18px;box-shadow:0 1px 3px rgba(0,0,0,.08);display:none}
+  .panel.active{display:block}
+  label{display:block;font-weight:600;margin:14px 0 4px}
+  .opt{font-weight:400;color:#6b7280;font-size:.85rem}
+  input,select{width:100%;padding:11px;border:1px solid #cfd5df;border-radius:8px;font-size:1rem;background:#fff}
+  .amount{display:flex;align-items:center;gap:6px}
+  .amount span{font-size:1.2rem}
+  button.go{width:100%;margin-top:20px;padding:13px;border:0;border-radius:10px;background:#1f7a4d;color:#fff;font-size:1.05rem;font-weight:600;cursor:pointer}
+  .msg{padding:10px 14px;border-radius:8px;margin-bottom:14px}
+  .ok{background:#e1f5e9;color:#14532d}
+  .err{background:#fde8e8;color:#7f1d1d}
+  small{color:#6b7280}
+</style>
+</head>
+<body>
+<header>
+  <h1>Expense Tracker</h1>
+  <span style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+    <a class="nav" href="/dashboard">📊 Summary / Dashboard</a>
+    <a class="nav" href="/recommendations">💡 Tips</a>
+    <a class="nav" href="/profile">👤 {{ username }}</a>
+    <form method="post" action="/logout" style="margin:0"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="nav" type="submit" style="border:0;cursor:pointer;font-size:1rem">Logout</button></form>
+  </span>
+</header>
+<main>
+  {% if saved %}<div class="msg ok">✅ Expense saved. You can add another or open the dashboard.</div>{% endif %}
+  {% if error %}<div class="msg err">⚠️ {{ error }}</div>{% endif %}
+
+  <div class="tabs">
+    {% if ocr_enabled %}<button type="button" class="tab {{ '' if manual_tab else 'active' }}" data-tab="scan">📷 Scan bill</button>{% endif %}
+    <button type="button" class="tab {{ 'active' if manual_tab else '' }}" data-tab="manual">✍️ Add manually</button>
+  </div>
+
+  {% if ocr_enabled %}<section id="scan" class="panel {{ '' if manual_tab else 'active' }}">
+    <form action="/upload" method="post" enctype="multipart/form-data">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      <label for="bill_images">Bill photos <span class="opt">(you can select many)</span></label>
+      <input id="bill_images" type="file" name="bill_images" accept="image/*" multiple required>
+      <button class="go" type="submit">Read bills</button>
+    </form>
+  </section>{% endif %}
+
+  <section id="manual" class="panel {{ 'active' if manual_tab else '' }}">
+    <form action="/manual" method="post">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+      <label for="category">Category</label>
+      <select id="category" name="category" required>
+        <option value="" disabled {{ '' if form.get('category') else 'selected' }}>Choose a category</option>
+        {% for name, hint in categories %}
+          <option value="{{ name }}" {{ 'selected' if form.get('category') == name }}>{{ name }} — {{ hint }}</option>
+        {% endfor %}
+      </select>
+
+      <label for="amount">Amount</label>
+      <div class="amount"><span>₹</span>
+        <input id="amount" name="amount" type="number" inputmode="decimal" step="0.01" min="0.01"
+               placeholder="0.00" value="{{ form.get('amount', '') }}" required>
+      </div>
+
+      <label for="date">Date <span class="opt">(today if you leave it)</span></label>
+      <input id="date" name="date" type="date" value="{{ form.get('date', '') }}">
+
+      <label for="items">What did you buy? <span class="opt">(optional, separate with commas)</span></label>
+      <input id="items" name="items" type="text" maxlength="300" placeholder="e.g. tea, medu vada"
+             value="{{ form.get('items', '') }}">
+
+      <label for="shop_name">Where? <span class="opt">(optional)</span></label>
+      <input id="shop_name" name="shop_name" type="text" maxlength="80" placeholder="e.g. Madurai Veg Restaurant"
+             value="{{ form.get('shop_name', '') }}">
+
+      <button class="go" type="submit">Save expense</button>
+    </form>
+  </section>
+</main>
+<footer style="text-align:center;padding:18px;font-size:.85rem;color:#6b7280"><a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></footer>
+<script>if ('serviceWorker' in navigator) { window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js')); }</script>
+<script>
+  // default date = today on the user's own device
+  const d = document.getElementById('date');
+  const now = new Date();
+  const iso = new Date(now.getTime() - now.getTimezoneOffset()*60000).toISOString().slice(0,10);
+  d.max = iso;
+  if (!d.value) d.value = iso;
+
+  document.querySelectorAll('.tab').forEach(btn => btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(b => b.classList.toggle('active', b === btn));
+    document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === btn.dataset.tab));
+  }));
+</script>
+</body>
+</html>

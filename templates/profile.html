@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block title %}My profile{% endblock %}
+{% block content %}
+<div class="panel">
+  <h2 style="margin-top:0">About you</h2>
+  <p class="hint">Everything here is optional. It is used only to make your tips fit your life. Skip anything you prefer not to share.</p>
+  {% if welcome %}<div class="msg ok">🎉 Welcome! Tell us a little about you, or skip this and go to the <a href="/">home page</a>.</div>{% endif %}
+  {% if saved %}<div class="msg ok">✅ Profile saved.</div>{% endif %}
+  {% for e in errors %}<div class="msg err">⚠️ {{ e }}</div>{% endfor %}
+
+  <form method="post" action="/profile">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+    <label for="display_name">What should we call you?</label>
+    <input id="display_name" name="display_name" maxlength="60" value="{{ p.get('display_name', '') }}">
+
+    <label for="work_type">I am</label>
+    <select id="work_type" name="work_type">
+      <option value="">Prefer not to say</option>
+      {% for w in work_type %}<option value="{{ w }}" {{ 'selected' if p.get('work_type') == w }}>{{ w }}</option>{% endfor %}
+    </select>
+
+    <label for="household">Who do I spend for?</label>
+    <select id="household" name="household">
+      <option value="">Prefer not to say</option>
+      {% for h in household %}<option value="{{ h }}" {{ 'selected' if p.get('household') == h }}>{{ h }}</option>{% endfor %}
+    </select>
+
+    <label for="monthly_income">Monthly income (₹) <span class="opt">optional</span></label>
+    <input id="monthly_income" name="monthly_income" type="number" min="0" step="1" inputmode="numeric" value="{{ p.get('monthly_income', '') }}">
+
+    <label for="monthly_budget">Monthly budget I want to stay within (₹) <span class="opt">optional · shown on your dashboard</span></label>
+    <input id="monthly_budget" name="monthly_budget" type="number" min="0" step="1" inputmode="numeric" value="{{ p.get('monthly_budget', '') }}">
+
+    <label for="savings_goal">Monthly savings goal (₹) <span class="opt">optional</span></label>
+    <input id="savings_goal" name="savings_goal" type="number" min="0" step="1" inputmode="numeric" value="{{ p.get('savings_goal', '') }}">
+
+    <label>My money style</label>
+    {% for name, text in styles %}
+    <label style="font-weight:400;display:flex;gap:8px;align-items:flex-start;margin:6px 0">
+      <input type="radio" name="spending_style" value="{{ name }}" style="width:auto;margin-top:4px" {{ 'checked' if p.get('spending_style') == name }}>
+      <span><strong>{{ name }}</strong> — {{ text }}</span>
+    </label>
+    {% endfor %}
+
+    <label>Where I would like to spend less <span class="opt">tick any</span></label>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px">
+      {% for c in categories %}
+      <label style="font-weight:400;margin:0;display:flex;gap:6px;align-items:center">
+        <input type="checkbox" name="cut_categories" value="{{ c }}" style="width:auto" {{ 'checked' if c in p.get('cut_categories', []) }}>{{ c }}
+      </label>{% endfor %}
+    </div>
+
+    <label>What I do NOT want to cut <span class="opt">tick any</span></label>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px">
+      {% for c in categories %}
+      <label style="font-weight:400;margin:0;display:flex;gap:6px;align-items:center">
+        <input type="checkbox" name="protect_categories" value="{{ c }}" style="width:auto" {{ 'checked' if c in p.get('protect_categories', []) }}>{{ c }}
+      </label>{% endfor %}
+    </div>
+
+    <label for="goal_text">My money goal <span class="opt">optional</span></label>
+    <input id="goal_text" name="goal_text" maxlength="500" placeholder="e.g. build an emergency fund, buy a bike in 1 year" value="{{ p.get('goal_text', '') }}">
+
+    <label for="habits_text">My spending habits, in my own words <span class="opt">optional</span></label>
+    <textarea id="habits_text" name="habits_text" maxlength="800" placeholder="e.g. I eat out on weekends, I buy groceries monthly, I find it hard to say no to online offers">{{ p.get('habits_text', '') }}</textarea>
+
+    <button class="go" type="submit">Save profile</button>
+  </form>
+</div>
+
+<div class="panel" style="margin-top:16px">
+  <h3 style="margin-top:0">Your data</h3>
+  <p><a class="nav" style="background:#1f3a5f;color:#fff;display:inline-block" href="/export.csv">⬇️ Download my expenses (CSV)</a></p>
+  <p class="hint">Opens in Excel or Google Sheets.</p>
+</div>
+
+<div class="panel" style="margin-top:16px;border:1px solid #fecaca">
+  <h3 style="margin-top:0;color:#991b1b">Delete my account</h3>
+  {% if delete_error %}<div class="msg err">⚠️ Not deleted: tick the box and enter your correct password.</div>{% endif %}
+  <p class="hint">This removes your account, expenses, profile and saved tips for good. It cannot be undone.</p>
+  <form method="post" action="/account/delete" onsubmit="return confirm('Delete your account and ALL your data permanently?');">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <label for="del_pw">Your password</label>
+    <input id="del_pw" name="password" type="password" autocomplete="current-password" required>
+    <label style="font-weight:400;display:flex;gap:8px;align-items:center">
+      <input type="checkbox" name="confirm_delete" value="1" style="width:auto" required> Yes, delete everything
+    </label>
+    <button class="go" type="submit" style="background:#b91c1c">Delete my account</button>
+  </form>
+</div>
+{% endblock %}

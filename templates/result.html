@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Expense Tracker Results</title>
+
+
+    <style>
+
+        body {
+
+            font-family:
+                'Segoe UI',
+                sans-serif;
+
+            background:
+                #f0f4f8;
+
+            padding: 30px;
+
+            margin: 0;
+
+        }
+
+
+        h1 {
+
+            text-align: center;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .notes-container {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            justify-content: center;
+
+            gap: 20px;
+
+        }
+
+
+        .note {
+
+            width: 300px;
+
+            padding: 20px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 5px 15px
+                rgba(0,0,0,0.2);
+
+            color: #333;
+
+            transition:
+                transform 0.2s;
+
+        }
+
+
+        .note:hover {
+
+            transform:
+                scale(1.05);
+
+        }
+
+
+        .color1 {
+
+            background: #ffd166;
+
+        }
+
+
+        .color2 {
+
+            background: #06d6a0;
+
+        }
+
+
+        .color3 {
+
+            background: #118ab2;
+
+            color: white;
+
+        }
+
+
+        .color4 {
+
+            background: #ef476f;
+
+            color: white;
+
+        }
+
+
+        .color5 {
+
+            background: #8338ec;
+
+            color: white;
+
+        }
+
+
+        .color6 {
+
+            background: #ff9f1c;
+
+        }
+
+
+        .items-list {
+
+            margin-top: 8px;
+
+            padding-left: 20px;
+
+        }
+
+
+        .items-list li {
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .category-box {
+
+            margin-top: 15px;
+
+            padding: 12px;
+
+            border-radius: 8px;
+
+            background:
+                rgba(255,255,255,0.35);
+
+        }
+
+
+        .confidence {
+
+            margin-top: 5px;
+
+            font-size: 14px;
+
+        }
+
+
+        .back-button {
+
+            display: block;
+
+            width: 200px;
+
+            margin: 30px auto;
+
+            padding: 12px;
+
+            text-align: center;
+
+            background: #764ba2;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 8px;
+
+        }
+
+
+        .back-button:hover {
+
+            background: #5e3b80;
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<h1>
+    Extracted Expense Details
+</h1>
+
+
+<div class="notes-container">
+
+
+    {% for bill in bills %}
+
+
+    <div
+        class="note color{{ loop.index % 6 + 1 }}"
+    >
+
+
+        <!-- SHOP NAME -->
+
+        <h3>
+            {{ bill["shop_name"] }}
+        </h3>
+
+
+        <!-- FILE NAME -->
+
+        <p>
+
+            <strong>
+                File:
+            </strong>
+
+            {{ bill["image_name"] }}
+
+        </p>
+
+
+        <!-- DATE -->
+
+        <p>
+
+            <strong>
+                Date:
+            </strong>
+
+            {{ bill["date"] }}
+
+        </p>
+
+
+        <!-- TOTAL AMOUNT -->
+
+        <p>
+
+            <strong>
+                Total Paid:
+            </strong>
+
+
+            {% if bill["amount"] is not none %}
+
+                ₹{{ "%.2f"|format(bill["amount"]) }}
+
+            {% else %}
+
+                Unknown
+
+            {% endif %}
+
+        </p>
+
+
+        <!-- ITEMS -->
+
+        <p>
+
+            <strong>
+                Items:
+            </strong>
+
+        </p>
+
+
+        {% if bill["items"] %}
+
+            <ul class="items-list">
+
+                {% for item in bill["items"] %}
+
+                    <li>
+                        {{ item }}
+                    </li>
+
+                {% endfor %}
+
+            </ul>
+
+        {% else %}
+
+            <p>
+                No items detected
+            </p>
+
+        {% endif %}
+
+
+        <!-- CATEGORY -->
+
+        <div class="category-box">
+
+            <strong>
+                AI Category:
+            </strong>
+
+            {{ bill["category"] }}
+
+
+            {% if bill["confidence"] is not none %}
+
+                <div class="confidence">
+
+                    <strong>
+                        AI Confidence:
+                    </strong>
+
+                    {{ "%.2f"|format(bill["confidence"]) }}%
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+    </div>
+
+
+    {% endfor %}
+
+
+</div>
+
+
+<a
+    href="/"
+    class="back-button"
+>
+    Upload More Bills
+</a>
+
+
+</body>
+
+</html>

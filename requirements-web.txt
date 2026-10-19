@@ -1,0 +1,7 @@
+# Used on the free web server (no bill scanning there, so no EasyOCR / scikit-learn)
+flask
+gunicorn
+pandas
+certifi
+tzdata
+pymongo[srv]

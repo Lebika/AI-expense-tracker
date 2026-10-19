@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Privacy Policy{% endblock %}
+{% block content %}
+<div class="panel" style="line-height:1.65">
+  <h2 style="margin-top:0">Privacy Policy</h2>
+  <p class="hint">Plain-language summary of how this app handles your information.</p>
+
+  <h3>What we keep</h3>
+  <ul>
+    <li>Your username, and your password as a one-way scrambled value (we cannot read your password).</li>
+    <li>The expenses you add: date, amount, category, shop name and items.</li>
+    {% if ocr_enabled %}<li>Bill photos you upload, which are read by the app to find the amount, date and items.</li>{% endif %}
+    <li>Profile answers you choose to give (budget, goals, habits). All of them are optional.</li>
+    <li>The money tips that were made for you.</li>
+  </ul>
+
+  <h3>Where it is kept</h3>
+  <p>In a cloud database (MongoDB Atlas) and the app is hosted on a cloud server. Connections use HTTPS.</p>
+
+  <h3>AI money tips</h3>
+  <p>Only when you tick the box and press the button, a short summary is sent to an AI provider to write your tips: totals per category, number of entries, spending by weekday, a few item names, today's budget numbers and your profile answers. We do <strong>not</strong> send your username or name, shop names, bill photos or bill text. The provider's own terms apply to what you send; on some free plans a provider may use submitted text to improve its products. If you do not want this, do not use the tips page.</p>
+
+  <h3>What we do not do</h3>
+  <ul>
+    <li>We do not sell your data and we do not show ads.</li>
+    <li>We never ask for card numbers, bank passwords or UPI PINs. Please never type them anywhere in this app.</li>
+  </ul>
+
+  <h3>Your choices</h3>
+  <ul>
+    <li><strong>Download</strong> all your expenses any time from your profile page.</li>
+    <li><strong>Delete</strong> your account and all your data any time from your profile page. It is removed straight away.</li>
+    <li>You can leave any profile question empty.</li>
+  </ul>
+
+  <h3>Keeping data</h3>
+  <p>Your data is kept until you delete your account.</p>
+
+  <h3>Children</h3>
+  <p>This app is meant for people aged 18 and over.</p>
+
+  <h3>Security</h3>
+  <p>We use hashed passwords, HTTPS and limits on repeated login attempts. No online service can promise perfect security, so please use a password you do not use elsewhere.</p>
+
+  <h3>Contact</h3>
+  <p>Questions or requests about your data: lebika2810@gmail.com</p>
+  <p class="hint">We may update this policy; the latest version is always on this page.</p>
+</div>
+{% endblock %}

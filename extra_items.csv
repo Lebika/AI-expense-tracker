@@ -1,0 +1,490 @@
+items,category,source
+tea,Food & Dining,curated
+coffee,Food & Dining,curated
+masala tea,Food & Dining,curated
+lemon tea,Food & Dining,curated
+milk tea,Food & Dining,curated
+medu vada,Food & Dining,curated
+medu wada,Food & Dining,curated
+masala vada,Food & Dining,curated
+vada,Food & Dining,curated
+wada,Food & Dining,curated
+sambar vada,Food & Dining,curated
+dosa,Food & Dining,curated
+ghee roast,Food & Dining,curated
+onion uthappam,Food & Dining,curated
+poori masala,Food & Dining,curated
+chapati kurma,Food & Dining,curated
+kothu parotta,Food & Dining,curated
+mutton biryani,Food & Dining,curated
+veg biryani,Food & Dining,curated
+fried rice,Food & Dining,curated
+noodles,Food & Dining,curated
+meals,Food & Dining,curated
+full meals,Food & Dining,curated
+mini tiffin,Food & Dining,curated
+sambar rice,Food & Dining,curated
+curd vada,Food & Dining,curated
+bonda,Food & Dining,curated
+bajji,Food & Dining,curated
+samosa,Food & Dining,curated
+puff,Food & Dining,curated
+pani puri,Food & Dining,curated
+bhel puri,Food & Dining,curated
+fresh juice,Food & Dining,curated
+lime soda,Food & Dining,curated
+badam milk,Food & Dining,curated
+rose milk,Food & Dining,curated
+ice cream,Food & Dining,curated
+tandoori chicken,Food & Dining,curated
+chicken fry,Food & Dining,curated
+fish fry,Food & Dining,curated
+egg omelette,Food & Dining,curated
+sandwich,Food & Dining,curated
+burger,Food & Dining,curated
+pizza,Food & Dining,curated
+pasta,Food & Dining,curated
+poori,Food & Dining,curated
+rava dosa,Food & Dining,curated
+kesari,Food & Dining,curated
+payasam,Food & Dining,curated
+jigarthanda,Food & Dining,curated
+buttermilk,Food & Dining,curated
+chicken 65,Food & Dining,curated
+parcel charge,Food & Dining,curated
+idli,Food & Dining,curated
+idly,Food & Dining,curated
+mini idli,Food & Dining,curated
+pongal,Food & Dining,curated
+idiyappam,Food & Dining,curated
+appam,Food & Dining,curated
+sambar,Food & Dining,curated
+chutney,Food & Dining,curated
+rasam rice,Food & Dining,curated
+lemon rice,Food & Dining,curated
+tomato rice,Food & Dining,curated
+curd rice,Food & Dining,curated
+thali,Food & Dining,curated
+chat items,Food & Dining,curated
+ponni rice,Groceries,curated
+brown rice,Groceries,curated
+raw rice,Groceries,curated
+idli rice,Groceries,curated
+toor dhal,Groceries,curated
+moong dhal,Groceries,curated
+urad dhal,Groceries,curated
+chana dhal,Groceries,curated
+appalam,Groceries,curated
+papad,Groceries,curated
+ring appalam,Groceries,curated
+sambar powder,Groceries,curated
+rasam powder,Groceries,curated
+chilli powder,Groceries,curated
+turmeric powder,Groceries,curated
+coriander powder,Groceries,curated
+mustard seeds,Groceries,curated
+jeera,Groceries,curated
+pepper,Groceries,curated
+tamarind,Groceries,curated
+jaggery,Groceries,curated
+groundnut oil,Groceries,curated
+gingelly oil,Groceries,curated
+coconut oil,Groceries,curated
+palm oil,Groceries,curated
+refined oil,Groceries,curated
+rice bran oil,Groceries,curated
+cooking oil,Groceries,curated
+brown oil,Groceries,curated
+wheat flour,Groceries,curated
+rava,Groceries,curated
+maida,Groceries,curated
+ragi flour,Groceries,curated
+rice flour,Groceries,curated
+poha,Groceries,curated
+vermicelli,Groceries,curated
+sago,Groceries,curated
+curd,Groceries,curated
+paneer,Groceries,curated
+ghee,Groceries,curated
+coconut,Groceries,curated
+banana,Groceries,curated
+apple,Groceries,curated
+lemon,Groceries,curated
+ginger,Groceries,curated
+garlic,Groceries,curated
+green chilli,Groceries,curated
+curry leaves,Groceries,curated
+brinjal,Groceries,curated
+carrot,Groceries,curated
+beans,Groceries,curated
+cabbage,Groceries,curated
+cauliflower,Groceries,curated
+drumstick,Groceries,curated
+ladies finger,Groceries,curated
+soap,Groceries,curated
+toothpaste,Groceries,curated
+detergent powder,Groceries,curated
+dish wash liquid,Groceries,curated
+floor cleaner,Groceries,curated
+biscuits,Groceries,curated
+noodles packet,Groceries,curated
+jam,Groceries,curated
+honey,Groceries,curated
+badam,Groceries,curated
+dates,Groceries,curated
+crocin tablet,Health & Medical,curated
+dolo 650,Health & Medical,curated
+azithromycin,Health & Medical,curated
+antibiotic strip,Health & Medical,curated
+ors sachet,Health & Medical,curated
+cetirizine,Health & Medical,curated
+pantoprazole,Health & Medical,curated
+vitamin c tablets,Health & Medical,curated
+multivitamin capsules,Health & Medical,curated
+calcium tablets,Health & Medical,curated
+bp tablets,Health & Medical,curated
+thermometer,Health & Medical,curated
+face mask,Health & Medical,curated
+sanitizer,Health & Medical,curated
+cotton roll,Health & Medical,curated
+band aid,Health & Medical,curated
+glucose strips,Health & Medical,curated
+doctor fee,Health & Medical,curated
+dental checkup,Health & Medical,curated
+eye test,Health & Medical,curated
+scan fee,Health & Medical,curated
+physiotherapy session,Health & Medical,curated
+yoga class,Health & Medical,curated
+zumba class,Health & Medical,curated
+protein bar,Health & Medical,curated
+syringe,Health & Medical,curated
+ointment,Health & Medical,curated
+eye drops,Health & Medical,curated
+pharmacy medicines,Health & Medical,curated
+lab test,Health & Medical,curated
+x ray,Health & Medical,curated
+medicines,Health & Medical,curated
+medicine,Health & Medical,curated
+tablets,Health & Medical,curated
+syrup,Health & Medical,curated
+apollo pharmacy medicines,Health & Medical,curated
+medical store,Health & Medical,curated
+prescription medicines,Health & Medical,curated
+injection,Health & Medical,curated
+hospital bill,Health & Medical,curated
+consultation,Health & Medical,curated
+blood test,Health & Medical,curated
+gym fee,Health & Medical,curated
+gym membership,Health & Medical,curated
+saree,Shopping,curated
+kurta,Shopping,curated
+t shirt,Shopping,curated
+formal shirt,Shopping,curated
+trousers,Shopping,curated
+leggings,Shopping,curated
+nighty,Shopping,curated
+towel,Shopping,curated
+school bag,Shopping,curated
+water bottle,Shopping,curated
+lunch box,Shopping,curated
+steel plate,Shopping,curated
+pressure cooker,Shopping,curated
+mixer grinder,Shopping,curated
+table fan,Shopping,curated
+led bulb,Shopping,curated
+extension box,Shopping,curated
+power bank,Shopping,curated
+mobile charger,Shopping,curated
+tempered glass,Shopping,curated
+sports shoes,Shopping,curated
+sandals,Shopping,curated
+watch,Shopping,curated
+handbag,Shopping,curated
+perfume,Shopping,curated
+toys,Shopping,curated
+gift item,Shopping,curated
+curtain,Shopping,curated
+mattress,Shopping,curated
+helmet,Shopping,curated
+umbrella,Shopping,curated
+chappal,Shopping,curated
+backpack,Shopping,curated
+laptop bag,Shopping,curated
+headset,Shopping,curated
+keyboard,Shopping,curated
+mouse,Shopping,curated
+diesel,Transport & Fuel,curated
+fuel,Transport & Fuel,curated
+two wheeler service,Transport & Fuel,curated
+car service,Transport & Fuel,curated
+engine oil,Transport & Fuel,curated
+tyre change,Transport & Fuel,curated
+puncture repair,Transport & Fuel,curated
+auto charge,Transport & Fuel,curated
+taxi fare,Transport & Fuel,curated
+ola ride,Transport & Fuel,curated
+uber ride,Transport & Fuel,curated
+rapido ride,Transport & Fuel,curated
+bus fare,Transport & Fuel,curated
+metro fare,Transport & Fuel,curated
+parking fee,Transport & Fuel,curated
+toll fee,Transport & Fuel,curated
+fastag recharge,Transport & Fuel,curated
+vehicle wash,Transport & Fuel,curated
+bike repair,Transport & Fuel,curated
+battery replacement,Transport & Fuel,curated
+car wash,Transport & Fuel,curated
+chain lubrication,Transport & Fuel,curated
+local train pass,Transport & Fuel,curated
+share auto,Transport & Fuel,curated
+petrol,Transport & Fuel,curated
+auto fare,Transport & Fuel,curated
+cab ride,Transport & Fuel,curated
+bike service,Transport & Fuel,curated
+flight booking,Travel,curated
+air ticket,Travel,curated
+train booking irctc,Travel,curated
+sleeper ticket,Travel,curated
+tatkal ticket,Travel,curated
+redbus ticket,Travel,curated
+hotel booking,Travel,curated
+lodge room rent,Travel,curated
+resort stay,Travel,curated
+tour package,Travel,curated
+visa fee,Travel,curated
+airport transfer,Travel,curated
+cab outstation,Travel,curated
+homestay,Travel,curated
+hostel bed,Travel,curated
+travel insurance,Travel,curated
+luggage fee,Travel,curated
+boarding pass,Travel,curated
+ac coach ticket,Travel,curated
+cinema ticket,Entertainment,curated
+theatre ticket,Entertainment,curated
+multiplex combo,Entertainment,curated
+game zone,Entertainment,curated
+video game,Entertainment,curated
+amusement park ticket,Entertainment,curated
+museum ticket,Entertainment,curated
+zoo ticket,Entertainment,curated
+concert ticket,Entertainment,curated
+cricket match ticket,Entertainment,curated
+bowling lane,Entertainment,curated
+go karting,Entertainment,curated
+escape room,Entertainment,curated
+stand up show,Entertainment,curated
+ps5 gaming,Entertainment,curated
+billiards,Entertainment,curated
+karaoke night,Entertainment,curated
+carnival ride,Entertainment,curated
+eb bill,Bills & Utilities,curated
+tneb bill,Bills & Utilities,curated
+current bill,Bills & Utilities,curated
+water bill,Bills & Utilities,curated
+metrowater,Bills & Utilities,curated
+gas bill,Bills & Utilities,curated
+lpg refill,Bills & Utilities,curated
+dth recharge,Bills & Utilities,curated
+tata sky recharge,Bills & Utilities,curated
+airtel recharge,Bills & Utilities,curated
+jio recharge,Bills & Utilities,curated
+postpaid bill,Bills & Utilities,curated
+wifi bill,Bills & Utilities,curated
+fiber broadband,Bills & Utilities,curated
+phone bill,Bills & Utilities,curated
+electricity charges,Bills & Utilities,curated
+sewage tax,Bills & Utilities,curated
+cable tv bill,Bills & Utilities,curated
+mobile recharge,Bills & Utilities,curated
+broadband bill,Bills & Utilities,curated
+electricity bill,Bills & Utilities,curated
+netflix,Subscriptions,curated
+hotstar subscription,Subscriptions,curated
+zee5 subscription,Subscriptions,curated
+sony liv,Subscriptions,curated
+prime video,Subscriptions,curated
+apple music,Subscriptions,curated
+youtube music,Subscriptions,curated
+google one storage,Subscriptions,curated
+icloud storage,Subscriptions,curated
+chatgpt plus,Subscriptions,curated
+linkedin premium,Subscriptions,curated
+newspaper subscription,Subscriptions,curated
+magazine subscription,Subscriptions,curated
+audible,Subscriptions,curated
+kindle unlimited,Subscriptions,curated
+canva pro,Subscriptions,curated
+spotify family,Subscriptions,curated
+monthly plan renewal,Subscriptions,curated
+annual plan renewal,Subscriptions,curated
+courier charge,Other,curated
+speed post,Other,curated
+xerox,Other,curated
+photocopy,Other,curated
+lamination,Other,curated
+printing,Other,curated
+tailoring charges,Other,curated
+alteration,Other,curated
+repair charges,Other,curated
+flower garland,Other,curated
+pooja items,Other,curated
+bank charges,Other,curated
+atm fee,Other,curated
+token,Other,curated
+dry cleaning,Other,curated
+ironing,Other,curated
+key duplicate,Other,curated
+passport photo,Other,curated
+stamp paper,Other,curated
+laundry,Other,curated
+tuition fee,Education,curated
+school fees,Education,curated
+college fees,Education,curated
+exam fee,Education,curated
+admission fee,Education,curated
+coaching fees,Education,curated
+online course,Education,curated
+udemy course,Education,curated
+text books,Education,curated
+hostel fees,Education,curated
+library fee,Education,curated
+school bus fee,Education,curated
+skill training,Education,curated
+coding bootcamp,Education,curated
+home tutor,Education,curated
+music class fee,Education,curated
+exam registration,Education,curated
+certificate fee,Education,curated
+lab fee,Education,curated
+project fee,Education,curated
+study material,Education,curated
+ielts fee,Education,curated
+neet coaching,Education,curated
+school uniform,Education,curated
+term fees,Education,curated
+entrance exam fee,Education,curated
+course fee,Education,curated
+books purchase,Education,curated
+tuition,Education,curated
+salon,Personal Care,curated
+haircut,Personal Care,curated
+hair cut,Personal Care,curated
+beard trim,Personal Care,curated
+barber,Personal Care,curated
+facial,Personal Care,curated
+hair spa,Personal Care,curated
+spa massage,Personal Care,curated
+manicure,Personal Care,curated
+pedicure,Personal Care,curated
+threading,Personal Care,curated
+waxing,Personal Care,curated
+beauty parlour,Personal Care,curated
+bridal makeup,Personal Care,curated
+hair colour,Personal Care,curated
+nail art,Personal Care,curated
+body massage,Personal Care,curated
+shaving,Personal Care,curated
+cosmetics,Personal Care,curated
+face cream,Personal Care,curated
+lipstick,Personal Care,curated
+face wash,Personal Care,curated
+hair oil,Personal Care,curated
+moisturizer,Personal Care,curated
+deodorant,Personal Care,curated
+grooming,Personal Care,curated
+makeup kit,Personal Care,curated
+eyebrow threading,Personal Care,curated
+shampoo,Personal Care,curated
+house rent,Rent & Housing,curated
+room rent,Rent & Housing,curated
+pg rent,Rent & Housing,curated
+flat rent,Rent & Housing,curated
+monthly rent,Rent & Housing,curated
+rent payment,Rent & Housing,curated
+maintenance charges,Rent & Housing,curated
+society maintenance,Rent & Housing,curated
+apartment maintenance,Rent & Housing,curated
+property tax,Rent & Housing,curated
+home loan emi,Rent & Housing,curated
+housing loan emi,Rent & Housing,curated
+security deposit,Rent & Housing,curated
+brokerage,Rent & Housing,curated
+painting work,Rent & Housing,curated
+house cleaning,Rent & Housing,curated
+maid salary,Rent & Housing,curated
+cook salary,Rent & Housing,curated
+water tank cleaning,Rent & Housing,curated
+pest control,Rent & Housing,curated
+home renovation,Rent & Housing,curated
+electrical repair,Rent & Housing,curated
+carpenter charges,Rent & Housing,curated
+plumber charges,Rent & Housing,curated
+electrician charges,Rent & Housing,curated
+house maintenance,Rent & Housing,curated
+rent,Rent & Housing,curated
+insurance premium,Insurance,curated
+life insurance premium,Insurance,curated
+health insurance premium,Insurance,curated
+vehicle insurance,Insurance,curated
+bike insurance,Insurance,curated
+car insurance renewal,Insurance,curated
+term plan premium,Insurance,curated
+lic premium,Insurance,curated
+medical insurance,Insurance,curated
+two wheeler insurance,Insurance,curated
+policy renewal,Insurance,curated
+star health premium,Insurance,curated
+hdfc life premium,Insurance,curated
+mediclaim,Insurance,curated
+home insurance,Insurance,curated
+insurance renewal,Insurance,curated
+third party insurance,Insurance,curated
+premium payment,Insurance,curated
+donation,Gifts & Donations,curated
+temple donation,Gifts & Donations,curated
+hundi,Gifts & Donations,curated
+charity,Gifts & Donations,curated
+ngo donation,Gifts & Donations,curated
+church offering,Gifts & Donations,curated
+zakat,Gifts & Donations,curated
+gift,Gifts & Donations,curated
+birthday gift,Gifts & Donations,curated
+wedding gift,Gifts & Donations,curated
+gift card,Gifts & Donations,curated
+gift hamper,Gifts & Donations,curated
+return gift,Gifts & Donations,curated
+bouquet,Gifts & Donations,curated
+festival gift,Gifts & Donations,curated
+religious offering,Gifts & Donations,curated
+annadhanam,Gifts & Donations,curated
+relief fund,Gifts & Donations,curated
+moi,Gifts & Donations,curated
+marriage moi,Gifts & Donations,curated
+function gift,Gifts & Donations,curated
+gift wrap,Gifts & Donations,curated
+donation receipt,Gifts & Donations,curated
+mutual fund sip,Savings & Investments,curated
+sip investment,Savings & Investments,curated
+fixed deposit,Savings & Investments,curated
+recurring deposit,Savings & Investments,curated
+rd installment,Savings & Investments,curated
+ppf deposit,Savings & Investments,curated
+nps contribution,Savings & Investments,curated
+stock purchase,Savings & Investments,curated
+gold purchase,Savings & Investments,curated
+gold coin,Savings & Investments,curated
+digital gold,Savings & Investments,curated
+chit fund,Savings & Investments,curated
+chit installment,Savings & Investments,curated
+post office savings,Savings & Investments,curated
+crypto purchase,Savings & Investments,curated
+share trading,Savings & Investments,curated
+bond purchase,Savings & Investments,curated
+emergency fund,Savings & Investments,curated
+savings deposit,Savings & Investments,curated
+sukanya samriddhi,Savings & Investments,curated
+elss investment,Savings & Investments,curated
+sip,Savings & Investments,curated
+mutual fund,Savings & Investments,curated
+gold chit,Savings & Investments,curated

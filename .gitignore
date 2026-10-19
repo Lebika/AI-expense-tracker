@@ -1,0 +1,12 @@
+# secrets and private data: NEVER upload these
+.env
+.secret_key
+users.csv
+profiles.csv
+expenses*.csv
+expense_items.csv
+recommendations.csv
+uploads/
+debug/
+__pycache__/
+*.pyc
